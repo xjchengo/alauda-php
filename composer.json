@@ -1,0 +1,27 @@
+{
+    "name": "xjchen/alauda",
+    "description": "alauda php deploy tool",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xjchengo",
+            "email": "xchenxujian@126.com",
+            "homepage": "http://www.echo58.com"
+        }
+    ],
+    "keywords": [
+        "docker",
+        "alauda",
+        "php"
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*",
+        "symfony/console": "2.6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xjchen\\Alauda\\": "src/"
+        }
+    }
+}
