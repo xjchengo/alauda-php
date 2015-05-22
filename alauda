@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+// application.php
+
+foreach ([__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        define('ALAUDA_COMPOSER_INSTALL', $file);
+        break;
+    }
+}
+require ALAUDA_COMPOSER_INSTALL;
+
+use Symfony\Component\Console\Application;
+use Xjchen\Alauda\Command\AuthProfileCommand;
+use Xjchen\Alauda\Command\TokenClearCommand;
+use Xjchen\Alauda\Command\ServiceListCommand;
+use Xjchen\Alauda\Command\ServiceDescribeCommand;
+
+$application = new Application();
+$application->add(new AuthProfileCommand());
+$application->add(new TokenClearCommand());
+$application->add(new ServiceListCommand());
+$application->add(new ServiceDescribeCommand());
+$application->run();

@@ -19,6 +19,9 @@
         "ext-curl": "*",
         "symfony/console": "2.6.*"
     },
+    "bin": [
+        "alauda"
+    ],
     "autoload": {
         "psr-4": {
             "Xjchen\\Alauda\\": "src/"
