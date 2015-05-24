@@ -36,6 +36,45 @@ class V1
         return static::requestWithToken($token, $url);
     }
 
+    public static function createService($namespace, $payload, $token)
+    {
+        $url = self::ALAUDA_URL . '/services/' . $namespace;
+        $payload = json_encode($payload, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+        $headers = [
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Content-Length' => strlen($payload),
+            'Authorization' => 'Token '.$token
+        ];
+        return static::request($url, 'POST', $payload, $headers);
+    }
+
+    public static function destroyService($namespace, $serviceName, $token)
+    {
+        $url = self::ALAUDA_URL . '/services/' . $namespace . '/' . $serviceName;
+        return static::requestWithToken($token, $url, 'DELETE');
+    }
+
+    public static function getServiceLogs($namespace, $serviceName, $token)
+    {
+        $endTime = time();
+        $startTime = $endTime - 604800; // max 7 days.
+
+        $url = self::ALAUDA_URL . '/services/' . $namespace . '/' . $serviceName . '/logs?start_time=' . $startTime . '&end_time=' . $endTime;
+        return static::requestWithToken($token, $url);
+    }
+
+    public static function getInstances($namespace, $serviceName, $token)
+    {
+        $url = self::ALAUDA_URL . '/services/' . $namespace . '/' . $serviceName . '/instances';
+        return static::requestWithToken($token, $url);
+    }
+
+    public static function getInstance($namespace, $serviceName, $uuid, $token)
+    {
+        $url = self::ALAUDA_URL . '/services/' . $namespace . '/' . $serviceName . '/instances/' . $uuid;
+        return static::requestWithToken($token, $url);
+    }
+
     public static function requestWithToken($token, $url, $method = 'GET', $payload = [])
     {
         return static::request($url, $method, $payload, ['Authorization' => 'Token '.$token]);
@@ -51,14 +90,14 @@ class V1
             CURLOPT_HEADER         => false,
         );
         if ($method !== 'GET') {
-            $options[CURLOPT_POSTFIELDS] = json_encode($payload);
-        }
-        if ($method === 'DELETE' || $method === 'PUT') {
+            // $options[CURLOPT_POSTFIELDS] = http_build_query($payload, null, '&');
+            $options[CURLOPT_POSTFIELDS] = $payload;
             $options[CURLOPT_CUSTOMREQUEST] = $method;
         }
         if (count($headers) > 0) {
             $options[CURLOPT_HTTPHEADER] = self::compileRequestHeaders($headers);
         }
+        var_dump($options);
         $ch = curl_init();
         curl_setopt_array($ch, $options);
         $rawResponse = curl_exec($ch);
@@ -77,7 +116,7 @@ class V1
     {
         $return = [];
         foreach ($headers as $key => $value) {
-            $return[] = $key . ':' . $value;
+            $return[] = $key . ': ' . $value;
         }
         return $return;
     }
