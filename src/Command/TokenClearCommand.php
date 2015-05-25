@@ -18,6 +18,6 @@ class TokenClearCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         file_put_contents($this->getConfigFile(), '');
-        $output->writeln('<info>Clear the token successfully!<info>');
+        $output->writeln('<info>Clear the token successfully!</info>');
     }
 }

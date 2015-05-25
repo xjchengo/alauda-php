@@ -21,6 +21,7 @@ use Xjchen\Alauda\Command\InstanceListCommand;
 use Xjchen\Alauda\Command\InstanceDescribeCommand;
 use Xjchen\Alauda\Command\UpReverseProxyCommand;
 use Xjchen\Alauda\Command\DatabaseCreateCommand;
+use Xjchen\Alauda\Command\UpCommand;
 
 $application = new Application();
 $application->add(new AuthProfileCommand());
@@ -33,4 +34,5 @@ $application->add(new InstanceListCommand());
 $application->add(new InstanceDescribeCommand());
 $application->add(new UpReverseProxyCommand());
 $application->add(new DatabaseCreateCommand());
+$application->add(new UpCommand());
 $application->run();

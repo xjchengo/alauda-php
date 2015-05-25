@@ -2,6 +2,8 @@
 
 class Factory
 {
+    public static $supportedFramework = ['Laravel', 'Thinkphp'];
+
     public static function guessFramework()
     {
         if (self::isThinkphp()) {
@@ -25,9 +27,10 @@ class Factory
 
     public static function getConfigRepository($framework)
     {
-        if ($framework == 'Thinkphp') {
+        $framework = strtolower($framework);
+        if ($framework == 'thinkphp') {
             return new ThinkphpConfig('./index.php');
-        } elseif ($framework == 'Unknown') {
+        } elseif ($framework == 'unknown') {
             return new UnknownConfig();
         }
     }
