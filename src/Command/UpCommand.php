@@ -65,29 +65,36 @@ class UpCommand extends AbstractCommand
 
         $question = new ConfirmationQuestion("Use the mysql server in alauda?", true);
         if ($helper->ask($input, $output, $question)) {
-            $payload = [
-                'service_name' => 'mysql-xjc',
-                'image_name' => 'index.alauda.cn/alauda/mysql',
-                'image_tag' => 'latest',
-                'instance_size' => 'XS',
-                'scaling_mode' => 'MANUAL',
-                'target_state' => 'STARTED',
-                'target_num_instances' => '1',
-                'instance_envvars' => [
-                    'MYSQL_ROOT_PASSWORD' => '123456'
-                ],
-                'instance_ports' => [
-                    [
-                        'container_port' => 3306,
-                        'protocol' => 'tcp',
+            $useDefaultMysql = true;
+            $mysqlService = ApiV1::getService($namespace, ConfigFactory::MYSQL_CONTAINER, $token);
+            if (isset($mysqlService['detail'])) {
+                $output->writeln("<info>Deploy mysql server...</info>");
+                $payload = [
+                    'service_name' => ConfigFactory::MYSQL_CONTAINER,
+                    'image_name' => 'index.alauda.cn/alauda/mysql',
+                    'image_tag' => 'latest',
+                    'instance_size' => 'XS',
+                    'scaling_mode' => 'MANUAL',
+                    'target_state' => 'STARTED',
+                    'target_num_instances' => '1',
+                    'instance_envvars' => [
+                        'MYSQL_ROOT_PASSWORD' => '123456'
                     ],
-                ],
-            ];
-            $result = ApiV1::createService($namespace, $payload, $token);
-            if (!($result == null or $result == 'App mysql-xjc already exists')) {
-                $output->writeln("<error>Deploy mysql server wrong:</error>");
-                $output->writeln("<error>    $result</error>");
+                    'instance_ports' => [
+                        [
+                            'container_port' => 3306,
+                            'protocol' => 'tcp',
+                        ],
+                    ],
+                ];
+                $result = ApiV1::createService($namespace, $payload, $token);
+                sleep(5);
+                if (!($result == null or $result == 'App mysql-xjc already exists')) {
+                    $output->writeln("<error>Deploy mysql server wrong:</error>");
+                    $output->writeln("<error>    $result</error>");
+                }
             }
+        } else {
             
         }
         $output->writeln("<info>$framework</info>");

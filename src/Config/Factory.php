@@ -3,6 +3,7 @@
 class Factory
 {
     public static $supportedFramework = ['Laravel', 'Thinkphp'];
+    CONST MYSQL_CONTAINER = 'mysql-xjc';
 
     public static function guessFramework()
     {
