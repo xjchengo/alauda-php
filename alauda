@@ -12,6 +12,7 @@ require ALAUDA_COMPOSER_INSTALL;
 
 use Symfony\Component\Console\Application;
 use Xjchen\Alauda\Command\AuthProfileCommand;
+use Xjchen\Alauda\Command\TokenGenerateCommand;
 use Xjchen\Alauda\Command\TokenClearCommand;
 use Xjchen\Alauda\Command\ServiceListCommand;
 use Xjchen\Alauda\Command\ServiceDescribeCommand;
@@ -19,12 +20,26 @@ use Xjchen\Alauda\Command\ServiceDestroyCommand;
 use Xjchen\Alauda\Command\ServiceLogCommand;
 use Xjchen\Alauda\Command\InstanceListCommand;
 use Xjchen\Alauda\Command\InstanceDescribeCommand;
-use Xjchen\Alauda\Command\UpReverseProxyCommand;
 use Xjchen\Alauda\Command\DatabaseCreateCommand;
 use Xjchen\Alauda\Command\UpCommand;
+use Xjchen\Alauda\Command\RepositoryListCommand;
+use Xjchen\Alauda\Command\RepositoryTagCommand;
+use Xjchen\Alauda\Command\RepositoryDestroyCommand;
+use Xjchen\Alauda\Command\RepositoryCreateCommand;
 
-$application = new Application();
+$logo = '
+       _                 _       
+      | |               | |      
+  __ _| | __ _ _   _  __| | __ _ 
+ / _` | |/ _` | | | |/ _` |/ _` |
+| (_| | | (_| | |_| | (_| | (_| |
+ \__,_|_|\__,_|\__,_|\__,_|\__,_|
+                                 
+                                 
+ ';
+$application = new Application($logo.'alauda command-line tool', 'V1');
 $application->add(new AuthProfileCommand());
+$application->add(new TokenGenerateCommand());
 $application->add(new TokenClearCommand());
 $application->add(new ServiceListCommand());
 $application->add(new ServiceDescribeCommand());
@@ -32,7 +47,10 @@ $application->add(new ServiceDestroyCommand());
 $application->add(new ServiceLogCommand());
 $application->add(new InstanceListCommand());
 $application->add(new InstanceDescribeCommand());
-$application->add(new UpReverseProxyCommand());
 $application->add(new DatabaseCreateCommand());
 $application->add(new UpCommand());
+$application->add(new RepositoryListCommand());
+$application->add(new RepositoryTagCommand());
+$application->add(new RepositoryDestroyCommand());
+$application->add(new RepositoryCreateCommand());
 $application->run();

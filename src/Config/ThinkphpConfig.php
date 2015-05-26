@@ -9,6 +9,7 @@ class ThinkphpConfig extends AbstractConfig implements ConfigInterface
         if (!self::$loaded) {
             self::loadFramework($indexFilePath);
             self::$loaded = true;
+            // spl_autoload_unregister('Think\Think::autoload');
         }
     }
 

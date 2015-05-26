@@ -16,21 +16,13 @@ class InstanceDescribeCommand extends AbstractCommand
             ->setName('instance:describe')
             ->setDescription('Get the details of an instance.')
             ->addArgument(
-                'namespace',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED
             )
             ->addArgument(
                 'instance_uuid',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
-                'token',
-                InputArgument::OPTIONAL,
-                'your alauda token'
+                InputArgument::REQUIRED,
+                'you can get it by instance:list command'
             )
         ;
     }
@@ -38,11 +30,9 @@ class InstanceDescribeCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $namespace = $input->getArgument('namespace');
         $serviceName = $input->getArgument('service_name');
         $uuid = $input->getArgument('instance_uuid');
-        $instance = ApiV1::getInstance($namespace, $serviceName, $uuid, $token);
-        // var_dump($instance);
+        $instance = ApiV1::getInstance($token['username'], $serviceName, $uuid, $token['token']);
 
         // basic info
         $outputArray = [];

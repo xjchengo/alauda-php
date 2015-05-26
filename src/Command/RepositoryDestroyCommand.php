@@ -9,15 +9,15 @@ use Xjchen\Alauda\Api\V1 as ApiV1;
 use Xjchen\Alauda\Util;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-class ServiceDestroyCommand extends AbstractCommand
+class RepositoryDestroyCommand extends AbstractCommand
 {
     protected function configure()
     {
         $this
-            ->setName('service:destroy')
-            ->setDescription('Destroy an service, all instances and related resources will be removed.')
+            ->setName('repository:destroy')
+            ->setDescription('Delete a repository,all tags will be removed.')
             ->addArgument(
-                'service_name',
+                'repo_name',
                 InputArgument::REQUIRED
             )
         ;
@@ -26,15 +26,15 @@ class ServiceDestroyCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $serviceName = $input->getArgument('service_name');
+        $repoName = $input->getArgument('repo_name');
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion("Do you really want to destroy $serviceName (y/n)?", false);
+        $question = new ConfirmationQuestion("Do you really want to destroy $repoName (y/n)?", false);
         if (!$helper->ask($input, $output, $question)) {
             $output->writeln('<info>action canceled!</info>');
             exit(1);
         }
-        $result = ApiV1::destroyService($token['username'], $serviceName, $token['token']);
+        $result = ApiV1::destroyRepository($token['username'], $repoName, $token['token']);
 
-        $output->writeln('<info>Destroy service ' . $serviceName . ' successfully!</info>');
+        $output->writeln('<info>Destroy repository ' . $repoName . ' successfully!</info>');
     }
 }

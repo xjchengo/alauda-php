@@ -15,24 +15,13 @@ class ServiceListCommand extends AbstractCommand
         $this
             ->setName('service:list')
             ->setDescription('List all services in a namespace.')
-            ->addArgument(
-                'namespace',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
-                'token',
-                InputArgument::OPTIONAL,
-                'your alauda token'
-            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $namespace = $input->getArgument('namespace');
-        $services = ApiV1::getServicesWithServicePort($namespace, $token);
-        // var_dump($services);
+        $services = ApiV1::getServicesWithServicePort($token['username'], $token['token']);
 
         $headers = ['service_name', 'image_name', 'default_domain_name', 'instance_ports', 'is_deploying', 'target_state', 'stopped_at', 'updated_at'];
         $outputArray = [];

@@ -2,15 +2,15 @@
 
 class Factory
 {
-    public static $supportedFramework = ['Laravel', 'Thinkphp'];
+    public static $supportedFramework = ['laravel', 'thinkphp'];
     CONST MYSQL_CONTAINER = 'mysql-xjc';
 
     public static function guessFramework()
     {
         if (self::isThinkphp()) {
-            return 'Thinkphp';
+            return 'thinkphp';
         }
-        return 'Unknown';
+        return 'other';
     }
 
     public static function isThinkphp()
@@ -31,8 +31,8 @@ class Factory
         $framework = strtolower($framework);
         if ($framework == 'thinkphp') {
             return new ThinkphpConfig('./index.php');
-        } elseif ($framework == 'unknown') {
-            return new UnknownConfig();
+        } else {
+            return new OtherConfig();
         }
     }
 }

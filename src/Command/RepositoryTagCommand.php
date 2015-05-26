@@ -6,29 +6,40 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Xjchen\Alauda\Api\V1 as ApiV1;
+use Xjchen\Alauda\Util;
 
-class AuthProfileCommand extends AbstractCommand
+class RepositoryTagCommand extends AbstractCommand
 {
     protected function configure()
     {
         $this
-            ->setName('auth:profile')
-            ->setDescription('Get the profile of a user.')
+            ->setName('repository:tags')
+            ->setDescription('List all tags of a repository.')
+            ->addArgument(
+                'repo_name',
+                InputArgument::REQUIRED
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $profile = ApiV1::getAuthProfile($token['token']);
+        $repoName = $input->getArgument('repo_name');
+        $tags = ApiV1::getRepositoryTags($token['username'], $repoName, $token['token']);
 
+        $headers = ['image_id', 'tag'];
         $outputArray = [];
-        foreach ($profile as $key => $value) {
-            $outputArray[] = [$key, $value];
+        foreach ($tags as $tag) {
+            $row = [];
+            foreach ($headers as $header) {
+                $row[] = $tag[$header];
+            }
+            $outputArray[] = $row;
         }
         $table = new Table($output);
         $table
-            ->setHeaders(['Key', 'Value'])
+            ->setHeaders($headers)
             ->setRows($outputArray)
         ;
         $table->render();

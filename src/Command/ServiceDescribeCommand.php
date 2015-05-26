@@ -16,17 +16,8 @@ class ServiceDescribeCommand extends AbstractCommand
             ->setName('service:describe')
             ->setDescription('Get the details of an application.')
             ->addArgument(
-                'namespace',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED
-            )
-            ->addArgument(
-                'token',
-                InputArgument::OPTIONAL,
-                'your alauda token'
             )
         ;
     }
@@ -34,9 +25,8 @@ class ServiceDescribeCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $namespace = $input->getArgument('namespace');
         $serviceName = $input->getArgument('service_name');
-        $service = ApiV1::getService($namespace, $serviceName, $token);
+        $service = ApiV1::getService($token['username'], $serviceName, $token['token']);
         // var_dump($service);
 
         // basic info
@@ -80,7 +70,7 @@ class ServiceDescribeCommand extends AbstractCommand
         }
         $table = new Table($output);
         $table
-            ->setHeaders(['service_port', 'protocol', 'container_port'])
+            ->setHeaders($headers)
             ->setRows($outputArray)
         ;
         $table->render();

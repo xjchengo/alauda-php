@@ -1,5 +1,7 @@
 <?php namespace Xjchen\Alauda\Api;
 
+use Exception;
+
 class V1
 {
     CONST ALAUDA_URL = 'https://api.alauda.cn/v1';
@@ -7,11 +9,22 @@ class V1
     public static $lastRawResponse;
     public static $lastCurlErrorCode;
     public static $lastCurlErrorMessage;
+    public static $lastResponseHttpStatusCode;
 
     public static function getAuthProfile($token)
     {
         $url = self::ALAUDA_URL . '/auth/profile';
         return static::requestWithToken($token, $url);
+    }
+
+    public static function generateToken($username, $password)
+    {
+        $url = self::ALAUDA_URL . '/generate-api-token';
+        $payload = [
+            'username' => $username,
+            'password' => $password,
+        ];
+        return static::request($url, 'POST', $payload);
     }
 
     public static function getServicesWithServicePort($namespace, $token)
@@ -75,6 +88,24 @@ class V1
         return static::requestWithToken($token, $url);
     }
 
+    public static function getRepositories($namespace, $token)
+    {
+        $url = self::ALAUDA_URL . '/repositories/' . $namespace;
+        return static::requestWithToken($token, $url);
+    }
+
+    public static function getRepositoryTags($namespace, $repoName, $token)
+    {
+        $url = self::ALAUDA_URL . '/repositories/' . $namespace . '/' . $repoName . '/tags';
+        return static::requestWithToken($token, $url);
+    }
+
+    public static function destroyRepository($namespace, $repoName, $token)
+    {
+        $url = self::ALAUDA_URL . '/repositories/' . $namespace . '/' . $repoName;
+        return static::requestWithToken($token, $url, 'DELETE');
+    }
+
     public static function requestWithToken($token, $url, $method = 'GET', $payload = [])
     {
         return static::request($url, $method, $payload, ['Authorization' => 'Token '.$token]);
@@ -97,7 +128,6 @@ class V1
         if (count($headers) > 0) {
             $options[CURLOPT_HTTPHEADER] = self::compileRequestHeaders($headers);
         }
-        var_dump($options);
         $ch = curl_init();
         curl_setopt_array($ch, $options);
         $rawResponse = curl_exec($ch);
@@ -106,8 +136,13 @@ class V1
         self::$lastCurlErrorCode = $curlErrorCode;
         $curlErrorMessage = curl_error($ch);
         self::$lastCurlErrorMessage = $curlErrorMessage;
+        $responseHttpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        self::$lastResponseHttpStatusCode = $responseHttpStatusCode;
         if ($curlErrorCode) {
             throw new Exception($curlErrorMessage, $curlErrorCode);
+        }
+        if ($responseHttpStatusCode >= 300) {
+            throw new Exception($rawResponse, $responseHttpStatusCode);
         }
         return json_decode($rawResponse, true);
     }

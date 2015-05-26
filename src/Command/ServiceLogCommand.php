@@ -16,17 +16,8 @@ class ServiceLogCommand extends AbstractCommand
             ->setName('service:logs')
             ->setDescription('Get service log.')
             ->addArgument(
-                'namespace',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED
-            )
-            ->addArgument(
-                'token',
-                InputArgument::OPTIONAL,
-                'your alauda token'
             )
         ;
     }
@@ -34,55 +25,13 @@ class ServiceLogCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $namespace = $input->getArgument('namespace');
         $serviceName = $input->getArgument('service_name');
-        $logs = ApiV1::getServiceLogs($namespace, $serviceName, $token);
-        var_dump($logs);
-
-        // // basic info
-        // $outputArray = [];
-        // foreach ($service as $key => $value) {
-        //     if (in_array($key, ['instance_envvars', 'instance_ports', 'instances'])) {
-        //         continue;
-        //     }
-        //     $outputArray[] = [$key, Util::toString($value)];
-        // }
-        // $table = new Table($output);
-        // $table
-        //     ->setHeaders(['BasicKey', 'Value'])
-        //     ->setRows($outputArray)
-        // ;
-        // $table->render();
-
-        // // instance_envvars
-        // $outputArray = [];
-        // $envVars = json_decode($service['instance_envvars'], true);
-        // foreach ($envVars as $key => $value) {
-        //     $outputArray[] = [$key, Util::toString($value)];
-        // }
-        // $table = new Table($output);
-        // $table
-        //     ->setHeaders(['environment_variableName', 'environment_variableValue'])
-        //     ->setRows($outputArray)
-        // ;
-        // $table->render();
-
-        // // instance_ports
-        // $headers = ['service_port', 'protocol', 'container_port'];
-        // $outputArray = [];
-        // $instancePorts = $service['instance_ports'];
-        // foreach ($instancePorts as $port) {
-        //     $row = [];
-        //     foreach ($headers as $header) {
-        //         $row[] = $port[$header];
-        //     }
-        //     $outputArray[] = $row;
-        // }
-        // $table = new Table($output);
-        // $table
-        //     ->setHeaders(['service_port', 'protocol', 'container_port'])
-        //     ->setRows($outputArray)
-        // ;
-        // $table->render();
+        $logs = ApiV1::getServiceLogs($token['username'], $serviceName, $token['token']);
+        $logsArray = explode("\n", $logs);
+        foreach ($logsArray as $log) {
+            if ($log) {
+                $output->writeln('<info>' . $log . '</info>');
+            }
+        }
     }
 }

@@ -1,12 +1,19 @@
 <?php namespace Xjchen\Alauda\Config;
 
+use Exception;
+
 abstract class AbstractConfig
 {
     
     public static function loadFramework($indexFilePath)
     {
-        ob_start();
-        require $indexFilePath;
-        ob_end_clean();
+        try {
+            ob_start();
+            require $indexFilePath;
+            ob_end_clean();
+        } catch (Exception $e) {
+
+        }
+        
     }
 }

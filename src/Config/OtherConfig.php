@@ -1,6 +1,6 @@
 <?php namespace Xjchen\Alauda\Config;
 
-class UnknownConfig extends AbstractConfig implements ConfigInterface
+class OtherConfig extends AbstractConfig implements ConfigInterface
 {
 
     public function getDbType(){

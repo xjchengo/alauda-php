@@ -4,6 +4,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Xjchen\Alauda\Util;
 
 class TokenClearCommand extends AbstractCommand
 {
@@ -17,7 +18,11 @@ class TokenClearCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        file_put_contents($this->getConfigFile(), '');
-        $output->writeln('<info>Clear the token successfully!</info>');
+        $status = Util::clearToken();
+        if ($status) {
+            $output->writeln('<info>Clear the token successfully!</info>');
+        } else {
+            $output->writeln('<error>Clear the token failed!</error>');
+        }
     }
 }

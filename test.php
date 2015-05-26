@@ -22,13 +22,13 @@ use Xjchen\Alauda\Api\V1 as ApiV1;
 
 // echo Xjchen\Alauda\Config\Factory::guessFramework();
 
-// $framework = ConfigFactory::guessFramework();
-// $config = ConfigFactory::getConfigRepository($framework);
-// var_dump($config->getDbType());
+$framework = ConfigFactory::guessFramework();
+$config = ConfigFactory::getConfigRepository($framework);
+var_dump($config->getDbType());
 // var_dump($config->getDbHost());
 // var_dump($config->getDbPort());
 // var_dump($config->getDbName());
 // var_dump($config->getDbUser());
 // var_dump($config->getDbPassword());
 
-var_dump(ApiV1::getAuthProfile('231d856c83ce1f05448896cc132dea4f12c8ac5c'));
+// var_dump(ApiV1::getAuthProfile('231d856c83ce1f05448896cc132dea4f12c8ac5c'));

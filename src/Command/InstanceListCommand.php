@@ -16,17 +16,8 @@ class InstanceListCommand extends AbstractCommand
             ->setName('instance:list')
             ->setDescription('List all instances belong to the application.')
             ->addArgument(
-                'namespace',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED
-            )
-            ->addArgument(
-                'token',
-                InputArgument::OPTIONAL,
-                'your alauda token'
             )
         ;
     }
@@ -34,9 +25,8 @@ class InstanceListCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $token = $this->getToken($input, $output);
-        $namespace = $input->getArgument('namespace');
         $serviceName = $input->getArgument('service_name');
-        $instances = ApiV1::getInstances($namespace, $serviceName, $token);
+        $instances = ApiV1::getInstances($token['username'], $serviceName, $token['token']);
 
         $headers = ['instance_name', 'uuid', 'started_at'];
         $outputArray = [];

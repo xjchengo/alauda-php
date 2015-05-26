@@ -12,4 +12,38 @@ class Util
             return $variable;
         }
     }
+
+    public static function getConfigFile()
+    {
+        $configFile = getenv("HOME") . DIRECTORY_SEPARATOR . '.alauda';
+        return $configFile;
+    }
+
+    public static function getToken()
+    {
+        $configFile = static::getConfigFile();
+        if (!file_exists($configFile)) {
+            return null;
+        }
+        return json_decode(file_get_contents($configFile), true);
+    }
+
+    public static function saveToken($token, $username)
+    {
+        $configFile = static::getConfigFile();
+        $data = [
+            'token' => $token,
+            'username' => $username,
+        ];
+        return file_put_contents($configFile, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public static function clearToken()
+    {
+        $configFile = static::getConfigFile();
+        if (file_exists($configFile)) {
+            return unlink($configFile);
+        }
+        return true;
+    }
 }
