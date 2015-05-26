@@ -14,7 +14,7 @@ class RepositoryTagCommand extends AbstractCommand
     {
         $this
             ->setName('repository:tags')
-            ->setDescription('List all tags of a repository.')
+            ->setDescription('List all tags of a repository')
             ->addArgument(
                 'repo_name',
                 InputArgument::REQUIRED

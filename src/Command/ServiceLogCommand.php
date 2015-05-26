@@ -14,7 +14,7 @@ class ServiceLogCommand extends AbstractCommand
     {
         $this
             ->setName('service:logs')
-            ->setDescription('Get service log.')
+            ->setDescription('Get service log')
             ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED

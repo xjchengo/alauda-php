@@ -16,8 +16,8 @@ abstract class AbstractCommand extends Command
     {
         $token = Util::getToken();
         if (!$token) {
-            $output->writeln('<info>cannot find your token</info>');
-            $output->writeln('<info>type `alauda token:generate` to get one</info>');
+            $output->writeln('<info>you did not login</info>');
+            $output->writeln('<info>use `login` command to login</info>');
             exit(1);
         }
         return $token;

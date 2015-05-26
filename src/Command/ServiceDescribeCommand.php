@@ -14,7 +14,7 @@ class ServiceDescribeCommand extends AbstractCommand
     {
         $this
             ->setName('service:describe')
-            ->setDescription('Get the details of an application.')
+            ->setDescription('Get the details of an application')
             ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED

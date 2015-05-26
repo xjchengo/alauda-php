@@ -14,7 +14,7 @@ class ServiceListCommand extends AbstractCommand
     {
         $this
             ->setName('service:list')
-            ->setDescription('List all services in a namespace.')
+            ->setDescription('List all services in a namespace')
         ;
     }
 
@@ -23,7 +23,7 @@ class ServiceListCommand extends AbstractCommand
         $token = $this->getToken($input, $output);
         $services = ApiV1::getServicesWithServicePort($token['username'], $token['token']);
 
-        $headers = ['service_name', 'image_name', 'default_domain_name', 'instance_ports', 'is_deploying', 'target_state', 'stopped_at', 'updated_at'];
+        $headers = ['service_name', 'image_name', 'default_domain_name', 'instance_ports', 'is_deploying', 'target_state', 'updated_at'];
         $outputArray = [];
         foreach ($services as $service) {
             $row = [];

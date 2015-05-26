@@ -14,7 +14,7 @@ class InstanceDescribeCommand extends AbstractCommand
     {
         $this
             ->setName('instance:describe')
-            ->setDescription('Get the details of an instance.')
+            ->setDescription('Get the details of an instance')
             ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED

@@ -17,7 +17,7 @@ class RepositoryCreateCommand extends AbstractCommand
     {
         $this
             ->setName('repository:create')
-            ->setDescription('Create a new Repository.')
+            ->setDescription('Create a new Repository')
             ->addArgument(
                 'repo_name',
                 InputArgument::REQUIRED
@@ -54,6 +54,8 @@ class RepositoryCreateCommand extends AbstractCommand
         } else {
             $isPublic = false;
         }
-        $output->writeln("<info>Create repository $repoName: $description $isPublic successfully!</info>");
+        $result = ApiV1::createRepository($token['username'], $repoName, $isPublic, $description, $token['token']);
+
+        $output->writeln("<info>Create repository $repoName successfully!</info>");
     }
 }

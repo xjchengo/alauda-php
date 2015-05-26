@@ -15,7 +15,7 @@ class RepositoryDestroyCommand extends AbstractCommand
     {
         $this
             ->setName('repository:destroy')
-            ->setDescription('Delete a repository,all tags will be removed.')
+            ->setDescription('Delete a repository, all tags will be removed')
             ->addArgument(
                 'repo_name',
                 InputArgument::REQUIRED

@@ -6,13 +6,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Xjchen\Alauda\Util;
 
-class TokenClearCommand extends AbstractCommand
+class LogoutCommand extends AbstractCommand
 {
     protected function configure()
     {
         $this
-            ->setName('token:clear')
-            ->setDescription('Clear the token saved on your home directory')
+            ->setName('logout')
+            ->setDescription('Log out from alauda registry server')
         ;
     }
 
@@ -20,7 +20,7 @@ class TokenClearCommand extends AbstractCommand
     {
         $status = Util::clearToken();
         if ($status) {
-            $output->writeln('<info>Clear the token successfully!</info>');
+            $output->writeln('<info>Logout successfully!</info>');
         } else {
             $output->writeln('<error>Clear the token failed!</error>');
         }

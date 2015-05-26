@@ -14,7 +14,7 @@ class RepositoryListCommand extends AbstractCommand
     {
         $this
             ->setName('repository:list')
-            ->setDescription('List all repositories.')
+            ->setDescription('List all repositories')
         ;
     }
 
@@ -23,15 +23,20 @@ class RepositoryListCommand extends AbstractCommand
         $token = $this->getToken($input, $output);
         $repositories = ApiV1::getRepositories($token['username'], $token['token']);
 
-        $headers = ['repo_name', 'description', 'is_public', 'is_automated', 'repo_starred_count', 'download', 'upload', 'created_at', 'updated_at'];
+        $headers = ['repo_name', 'image_name', 'is_public', 'is_automated', 'repo_starred_count', 'download', 'upload', 'created_at'];
         $outputArray = [];
         foreach ($repositories['results'] as $repository) {
             $row = [];
             foreach ($headers as $header) {
-                $row[] = Util::toString($repository[$header]);
+                if ($header == 'image_name') {
+                    $row[] = 'index.alauda.cn/' . $token['username'] . '/' . $repository['repo_name'];
+                } else {
+                    $row[] = Util::toString($repository[$header]);
+                }
             }
             $outputArray[] = $row;
         }
+        $headers = ['repo_name', 'image_name', 'is_public', 'is_automated', 'star', 'download', 'upload', 'created_at'];
         $table = new Table($output);
         $table
             ->setHeaders($headers)

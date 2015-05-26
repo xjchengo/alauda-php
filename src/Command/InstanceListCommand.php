@@ -14,7 +14,7 @@ class InstanceListCommand extends AbstractCommand
     {
         $this
             ->setName('instance:list')
-            ->setDescription('List all instances belong to the application.')
+            ->setDescription('List all instances belong to the application')
             ->addArgument(
                 'service_name',
                 InputArgument::REQUIRED

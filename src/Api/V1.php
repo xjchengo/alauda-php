@@ -106,6 +106,24 @@ class V1
         return static::requestWithToken($token, $url, 'DELETE');
     }
 
+    public static function createRepository($namespace, $repoName, $isPublic, $description, $token)
+    {
+        $url = self::ALAUDA_URL . '/repositories/' . $namespace;
+        $payload = [
+            'repo_name' => $repoName,
+            'description' => $description,
+            'namespace' => $namespace,
+            'is_public' => $isPublic
+        ];
+        $payload = json_encode($payload, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+        $headers = [
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Content-Length' => strlen($payload),
+            'Authorization' => 'Token '.$token
+        ];
+        return static::request($url, 'POST', $payload, $headers);
+    }
+
     public static function requestWithToken($token, $url, $method = 'GET', $payload = [])
     {
         return static::request($url, $method, $payload, ['Authorization' => 'Token '.$token]);

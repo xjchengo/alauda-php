@@ -13,7 +13,7 @@ class DatabaseCreateCommand extends AbstractCommand
     {
         $this
             ->setName('db:create')
-            ->setDescription('Create a database if not exist.')
+            ->setDescription('Create a database if not exist')
             ->addArgument(
                 'name',
                 InputArgument::REQUIRED

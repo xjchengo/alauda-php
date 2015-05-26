@@ -13,7 +13,7 @@ class AuthProfileCommand extends AbstractCommand
     {
         $this
             ->setName('auth:profile')
-            ->setDescription('Get the profile of a user.')
+            ->setDescription('Get the profile of a user')
         ;
     }
 
