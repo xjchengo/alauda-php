@@ -6,9 +6,17 @@ This is a package for managing alauda services in command-line.
 
 ## Requirement
 
--	php >= 5.4.0
+-	PHP >= 5.4.0
 
 ## Install
+
+### As a Phar
+
+	curl -O http://7xjbct.com2.z0.glb.qiniucdn.com/v1.0/alauda.phar
+	chmod +x alauda.phar
+	mv alauda.phar /usr/local/bin/alauda
+	
+### As a Global Composer Install
 
 You must install composer first. Head to [Install Composer](https://getcomposer.org/doc/00-intro.md) for details.
 
