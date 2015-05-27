@@ -2,7 +2,11 @@
 
 ## Introduction
 
-This is a package for managing alauda account in command-line.
+This is a package for managing alauda services in command-line.
+
+## Requirement
+
+-	php >= 5.4.0
 
 ## Install
 
