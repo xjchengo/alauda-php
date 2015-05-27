@@ -139,7 +139,6 @@ class V1
             CURLOPT_HEADER         => false,
         );
         if ($method !== 'GET') {
-            // $options[CURLOPT_POSTFIELDS] = http_build_query($payload, null, '&');
             $options[CURLOPT_POSTFIELDS] = $payload;
             $options[CURLOPT_CUSTOMREQUEST] = $method;
         }
