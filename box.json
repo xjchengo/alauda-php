@@ -1,0 +1,13 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "src",
+        "vendor"
+    ],
+    "files": [
+        "LICENSE"
+    ],
+    "main": "alauda",
+    "output": "alauda.phar",
+    "stub": true
+}
