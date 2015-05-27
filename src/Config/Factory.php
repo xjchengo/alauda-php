@@ -10,7 +10,7 @@ class Factory
         if (self::isThinkphp()) {
             return 'thinkphp';
         }
-        return 'other';
+        return 'others';
     }
 
     public static function isThinkphp()
