@@ -58,6 +58,7 @@ After above command, add compose bin to your path.
 -	`repository:destroy`	Delete a repository, all tags will be removed
 -	`repository:list`	List all repositories
 -	`repository:tags`	List all tags of a repository
+-	`service:create`	Create a alauda service from your docker-compose.yml file
 -	`service:describe`	Get the details of an application
 -	`service:destroy`	Destroy an service, all instances and related resources will be removed
 -	`service:list`		List all services in a namespace
