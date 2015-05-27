@@ -7,6 +7,7 @@ This is a package for managing alauda services in command-line.
 ## Requirement
 
 -	PHP >= 5.4.0
+-	ext-curl
 
 ## Install
 
